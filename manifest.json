@@ -3,7 +3,7 @@
 	"name": "Scroll Offset",
 	"version": "1.0.1",
 	"minAppVersion": "0.12.0",
-	"description": "Preserve minmium lines or distances before or after cursor.",
+	"description": "Preserve minmium distances before or after cursor.",
 	"author": "Lijyze",
 	"authorUrl": "https://github.com/lijyze",
 	"isDesktopOnly": true

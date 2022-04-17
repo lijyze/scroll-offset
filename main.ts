@@ -1,4 +1,5 @@
-import { App, Editor, MarkdownView, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import generateScrollOffsetCM6Plugin from './ScrollOffsetCM6';
 
 interface ScrollOffsetSettings {
 	percentageMode: boolean;
@@ -11,7 +12,63 @@ const DEFAULT_SETTINGS: ScrollOffsetSettings = {
 }
 
 export default class ScrollOffset extends Plugin {
+	private clickSwitch = false;
 	settings: ScrollOffsetSettings;
+
+	// prevent click scroll
+	mouseDownHandler = () => {
+		this.clickSwitch = true;
+	}
+
+	// CM% scroll handler
+	cursorActiveHandler = (cm: CodeMirror.Editor) => {
+		if (this.clickSwitch) {
+			this.clickSwitch = false;
+			return;
+		}
+
+		this.scrollLaunch(cm);
+	}
+
+	calcRequiredOffset = (container: HTMLElement, cursorHeight: number) => {
+		const {settings} = this;
+		const maxOffset = (container.offsetHeight - cursorHeight) / 2;
+
+		let requiredOffset: number = settings.percentageMode
+			? container.offsetHeight * +settings.offset / 100
+			: +settings.offset;
+	
+		requiredOffset = Math.min(requiredOffset, maxOffset);
+
+		return requiredOffset
+	}
+
+	scrollLaunch = (cm: CodeMirror.Editor) => {
+		const cursor = cm.charCoords(cm.getCursor());
+		const cursorHeight = cursor.bottom - cursor.top + 5;
+		const container = cm.getWrapperElement();
+		const requiredOffset = this.calcRequiredOffset(container, cursorHeight);
+
+		cm.scrollIntoView(null, requiredOffset)
+	}
+
+	enableScrollOffset = () => {
+		// this works with CM5
+		this.registerCodeMirror(cm => {
+			cm.on('mousedown', this.mouseDownHandler)
+			cm.on('cursorActivity', this.cursorActiveHandler);
+		})
+
+		// this works with CM6
+		this.registerEditorExtension(generateScrollOffsetCM6Plugin(this.calcRequiredOffset));
+	}
+
+	disableScrollOffset = () => {
+		this.registerCodeMirror(cm => {
+			cm.off('mousedown', this.mouseDownHandler)
+			cm.off('cursorActivity', this.cursorActiveHandler);
+		})
+	}
 
 	async onload() {
 		// This load current settings.
@@ -20,18 +77,11 @@ export default class ScrollOffset extends Plugin {
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new ScrollOffsetSettingTab(this.app, this));
 
-		this.addCommand({
-			id: 'scroll-offset-launch',
-			name: 'Scroll offset launch',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor);
-				console.log(view);
-			}
-		})
+		this.enableScrollOffset();
 	}
 
 	onunload() {
-
+		this.disableScrollOffset();
 	}
 
 	async loadSettings() {
@@ -72,7 +122,7 @@ class ScrollOffsetSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName('Distance')
-			.setDesc('unit in "px", or "%" if using percentage offset')
+			.setDesc('unit in "px", or "%" if using percentage offset, 0 to disable this plugin')
 			.addText(text => text
 				.setValue(this.plugin.settings.offset)
 				.onChange((value) => {
