@@ -30,7 +30,7 @@ function generateScrollOffsetCM6Plugin(calcRequiredOffset: (container: HTMLEleme
             if (cursor) {
               if (this.switch) {
                 /**
-                 * Can't use `lineHeight` because multiple line paragraph
+                 * Can't use `lineHeight` because of multiple line paragraph
                  * But cursorHeight is less then lineHeight about 5px
                  * So add this 5px;
                  */
@@ -49,7 +49,6 @@ function generateScrollOffsetCM6Plugin(calcRequiredOffset: (container: HTMLEleme
           }
         })
       }
-  
     }
   }, 
   {

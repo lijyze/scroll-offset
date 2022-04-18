@@ -49,6 +49,7 @@ export default class ScrollOffset extends Plugin {
 		const container = cm.getWrapperElement();
 		const requiredOffset = this.calcRequiredOffset(container, cursorHeight);
 
+		// First argument `null` means the cursor
 		cm.scrollIntoView(null, requiredOffset)
 	}
 
@@ -64,7 +65,7 @@ export default class ScrollOffset extends Plugin {
 	}
 
 	disableScrollOffset = () => {
-		this.registerCodeMirror(cm => {
+		this.app.workspace.iterateCodeMirrors(cm => {
 			cm.off('mousedown', this.mouseDownHandler)
 			cm.off('cursorActivity', this.cursorActiveHandler);
 		})
