@@ -1,16 +1,17 @@
 import {ViewPlugin, ViewUpdate, EditorView, PluginField} from '@codemirror/view';
+import { Prec } from '@codemirror/state'
 
 const eventHandlers = {
   mousedown(event: MouseEvent, view: EditorView) {
     this.switch = false;
   },
-  mouseup(event: MouseEvent, view: EditorView) {
+  keydown(event: KeyboardEvent, view: EditorView) {
     this.switch = true;
   },
 }
 
 function generateScrollOffsetCM6Plugin(calcRequiredOffset: (container: HTMLElement, cursorHeight: number) => number) {
-  return ViewPlugin.fromClass(class {
+  return Prec.highest(ViewPlugin.fromClass(class {
     switch = true;
     margin = {
       top: 0,
@@ -57,7 +58,7 @@ function generateScrollOffsetCM6Plugin(calcRequiredOffset: (container: HTMLEleme
     provide: [
       PluginField.scrollMargins.from(value => value.margin)
     ],
-  })
+  }))
 }
 
 export default generateScrollOffsetCM6Plugin

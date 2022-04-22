@@ -72,6 +72,8 @@ export default class ScrollOffset extends Plugin {
 	}
 
 	async onload() {
+		console.log('Loading Scroll Offset.')
+
 		// This load current settings.
 		await this.loadSettings();
 
@@ -83,6 +85,8 @@ export default class ScrollOffset extends Plugin {
 
 	onunload() {
 		this.disableScrollOffset();
+	
+		console.log('Scroll Offset unloaded.')
 	}
 
 	async loadSettings() {
