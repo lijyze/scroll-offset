@@ -21,36 +21,36 @@ function generateScrollOffsetCM6Plugin(calcRequiredOffset: (container: HTMLEleme
     constructor(_view: EditorView) {}
   
     update(_update: ViewUpdate) {
-      if (_update.selectionSet) {
-        const view = _update.view;
+      if (_update.selectionSet) return ;
 
-        view.requestMeasure({
-          read: () => {
-            return {
-              cursor: view.coordsAtPos(view.state.selection.main.head),
-            }
-          },
-          write: ({cursor}) => {
-            if (cursor) {
-              if (this.switch) {
-                /**
-                 * Can't use `lineHeight` because of multiple line paragraph
-                 * But cursorHeight is less then lineHeight about 5px
-                 * So add this 5px;
-                 */
-                const cursorHeight = cursor.bottom - cursor.top + 5
-                const requiredOffset = calcRequiredOffset(view.dom, cursorHeight)
+      const view = _update.view;
 
-                this.margin.top = requiredOffset;
-                this.margin.bottom = requiredOffset
-              } else {
-                this.margin.top = 0
-                this.margin.bottom = 0
-              }
-            }
-          },
-        })
-      }
+      view.requestMeasure({
+        read: () => {
+          return {
+            cursor: view.coordsAtPos(view.state.selection.main.head),
+          }
+        },
+        write: ({cursor}) => {
+          if (cursor) return ;
+
+          if (this.switch) {
+            /**
+             * Can't use `lineHeight` because of multiple line paragraph
+             * But cursorHeight is less then lineHeight about 5px
+             * So add this 5px;
+             */
+            const cursorHeight = cursor.bottom - cursor.top + 5
+            const requiredOffset = calcRequiredOffset(view.dom, cursorHeight)
+
+            this.margin.top = requiredOffset;
+            this.margin.bottom = requiredOffset
+          } else {
+            this.margin.top = 0
+            this.margin.bottom = 0
+          }
+        },
+      })
     }
   }, 
   {

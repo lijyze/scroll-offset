@@ -20,7 +20,7 @@ export default class ScrollOffset extends Plugin {
 		this.clickSwitch = true;
 	}
 
-	// CM% scroll handler
+	// CM5 scroll handler
 	cursorActiveHandler = (cm: CodeMirror.Editor) => {
 		if (this.clickSwitch) {
 			this.clickSwitch = false;
