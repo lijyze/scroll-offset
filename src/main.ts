@@ -7,23 +7,23 @@ interface ScrollOffsetSettings {
 }
 
 const DEFAULT_SETTINGS: ScrollOffsetSettings = {
-	percentageMode: false,
-	offset: '0',
+	percentageMode: true,
+	offset: '25',
 }
 
 export default class ScrollOffset extends Plugin {
-	private clickSwitch = false;
+	private clickSwitch = true;
 	settings: ScrollOffsetSettings;
 
 	// prevent click scroll
 	mouseDownHandler = () => {
-		this.clickSwitch = true;
+		this.clickSwitch = false;
 	}
 
 	// CM5 scroll handler
 	cursorActiveHandler = (cm: CodeMirror.Editor) => {
-		if (this.clickSwitch) {
-			this.clickSwitch = false;
+		if (!this.clickSwitch) {
+			this.clickSwitch = true;
 			return;
 		}
 
