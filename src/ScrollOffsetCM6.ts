@@ -21,7 +21,7 @@ function generateScrollOffsetCM6Plugin(calcRequiredOffset: (container: HTMLEleme
     constructor(_view: EditorView) {}
   
     update(_update: ViewUpdate) {
-      if (_update.selectionSet) return ;
+      if (!_update.selectionSet) return ;
 
       const view = _update.view;
 
@@ -32,7 +32,7 @@ function generateScrollOffsetCM6Plugin(calcRequiredOffset: (container: HTMLEleme
           }
         },
         write: ({cursor}) => {
-          if (cursor) return ;
+          if (!cursor) return ;
 
           if (this.switch) {
             /**
