@@ -1,6 +1,6 @@
 # Obsidian Scroll Offset
 
-This plugin can keep a defined distance before and after cursor, just like `scrolloff` in vim of `cursor surrounding lines` in VS-Code.
+This plugin can keep a custom distance before and after cursor, just like `scrolloff` in vim of `cursor surrounding lines` in VS-Code.
 
 ## Usage
 
