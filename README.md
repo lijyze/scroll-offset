@@ -4,7 +4,10 @@ This plugin can keep a defined distance before and after cursor, just like `scro
 
 ## Usage
 
-You can simply config the distance you want in config tab with a fixed pixel or a percentage of height of content
+1. Define a distance you like in setting tab.
+2. Enjoy it!
+
+You can set the distance to either a fixed distance with unit in `px` or a relative distance to the height of the content area.
 
 ## Notice
 
