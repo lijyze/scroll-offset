@@ -15,7 +15,7 @@ This plugin will exam the boundary situation. If the given distance more than ha
 
 ## Manually installing the plugin
 
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
+- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/obsidian-scroll-offset/`.
 
 ## Donating
 
