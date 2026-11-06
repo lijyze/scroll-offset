@@ -13,9 +13,9 @@ const scrollOffCompartment = new Compartment();
 const scrollOffPlugin = ViewPlugin.fromClass(
 	class {
 		private view: EditorView;
-    private mouseActing = false;
     private _cachedOffset = 5;
     public actualOffset = 5;
+    public mouseActing = false;
 
 		constructor(view: EditorView) {
 			this.view = view;
@@ -36,7 +36,7 @@ const scrollOffPlugin = ViewPlugin.fromClass(
 
     getCursorCoords(view: EditorView) {
       const head = view.state.selection.main.head;
-      return {head, coords: view.coordsAtPos(head)}
+      return view.coordsAtPos(head)
     }
 
     setCacheOffset(offset: number) {
@@ -81,7 +81,7 @@ const scrollOffPlugin = ViewPlugin.fromClass(
             if (!rect || rect.height <= 0) return;
 
             // 获取不到光标位置：跳过，等待再次触发
-            const {head, coords} = this.getCursorCoords(view);
+            const coords = this.getCursorCoords(view);
             if (!coords) return;
             const cursorHeight = coords.bottom - coords.top;
 
@@ -97,10 +97,10 @@ const scrollOffPlugin = ViewPlugin.fromClass(
   {
     eventHandlers: {
       mousedown: function(event: MouseEvent, view: EditorView) {
-        (this as any).mouseActing = true;
+        this.mouseActing = true;
       },
       mouseup: function(event: MouseEvent, view: EditorView) {
-        (this as any).mouseActing = true;
+        this.mouseActing = true;
       },
     },
     provide: plugin => EditorView.scrollMargins.of(view => {
