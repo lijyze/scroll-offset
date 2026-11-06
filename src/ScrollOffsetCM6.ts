@@ -27,7 +27,7 @@ const scrollOffPlugin = ViewPlugin.fromClass(
 
       const requiredDistance = isPercentage? windowHeight * distance / 100: distance;
 
-      return Math.min(requiredDistance, limitDistance)
+      return Math.max(5, Math.min(requiredDistance, limitDistance));
     }
 
     getViewportRect(view: EditorView) {
