@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-scroll-offset",
 	"name": "Scroll Offset",
-	"version": "1.0.5",
+	"version": "1.0.6",
 	"minAppVersion": "1.14.0",
 	"description": "Preserve minmium distances before and after cursor.",
 	"author": "Lijyze",
