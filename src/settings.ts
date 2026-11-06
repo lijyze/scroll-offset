@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, Setting, SettingDefinitionItem } from "obsidian";
+import { App, PluginSettingTab, SettingDefinitionItem } from "obsidian";
 import ScrollOffset from "./main";
 
 export interface ScrollOffsetSettings {
